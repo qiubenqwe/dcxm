@@ -1,0 +1,55 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+  }
+
+  .form-label {
+    font-size: 1.2rem;
+  }
+
+  .form-control {
+    width: 100%;
+    font-size: 1.2rem;
+  }
+
+  .list-group {
+    position: absolute;
+    z-index: 1;
+    width: 650px;
+    margin-left: 80px;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 0.2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.808);
+
+  }
+
+  .list-group-item {
+    cursor: pointer;
+  }
+
+  .table {
+    font-size: 1.2rem;
+  }
+
+  th {
+    font-weight: bold;
+  }
+
+  .pagination {
+    margin-top: 2rem;
+  }
+
+  .page-item {
+    cursor: pointer;
+  }
+
+  .page-item.disabled .page-link {
+    opacity: 0.5;
+    pointer-events: none;
+  }
