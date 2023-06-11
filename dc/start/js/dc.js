@@ -168,3 +168,53 @@ axios.get('https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/
     .catch(error => {
         console.log(error);
     });
+
+
+    
+    const canvas = document.getElementById("can");
+    const ctx = canvas.getContext("2d");
+    const ch = canvas.height = window.innerHeight;
+    const cw = canvas.width = window.innerWidth;
+
+    class Circle {
+        constructor() {
+            this.x = Math.random() * cw;
+            this.y = Math.random() * ch;
+            this.r = 3;
+            this.speedX = Math.random() * 2 + 2 >= 3 ? -2 : 2;
+            this.speedY = Math.random() * 2 + 2 >= 3 ? -2 : 2;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+            ctx.fillStyle = "blue";
+            ctx.fill();
+            ctx.closePath();
+        }
+        move() {
+            if (this.x >= cw || this.x <= 0) {
+                this.speedX = -this.speedX;
+                this.speedY = this.speedY;
+            }
+            if (this.y >= ch || this.y <= 0) {
+                this.speedX = this.speedX;
+                this.speedY = -this.speedY;
+            }
+            this.x += this.speedX;
+            this.y += this.speedY;
+        }
+    }
+
+    const circles = [];
+    for (let i = 0; i < 40; i++) {
+        circles.push(new Circle());
+    }
+
+    setInterval(() => {
+        ctx.fillStyle = "rgba(0,0,0,0.05)";
+        ctx.fillRect(0, 0, cw, ch);
+        circles.forEach(circle => {
+            circle.draw();
+            circle.move();
+        });
+    }, 1000 / 60);
