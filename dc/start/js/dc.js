@@ -49,17 +49,17 @@ axios.get('https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/
                 </a>
               </li>
             `;
-            
+
             for (let i = 1; i <= totalPages; i++) {
-            // 判断是否需要添加 active 类名
-              const activeClass = i === currentPage ? 'active' : '';
-              paginationHtml += `
+                // 判断是否需要添加 active 类名
+                const activeClass = i === currentPage ? 'active' : '';
+                paginationHtml += `
                 <li class="page-item ${activeClass}">
                   <a class="page-link" href="#">${i}</a>
                 </li>
               `;
             }
-            
+
             paginationHtml += `
               <li class="page-item ${nextPageClass}" id="next-page">
                 <a class="page-link" href="#" aria-label="Next">
@@ -115,7 +115,7 @@ axios.get('https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/
                     return renderCities();
                 }
                 if (searchResults.querySelector('li.active')) {
-                  return renderCities();
+                    return renderCities();
                 }
                 clearSearchResults();
             }
@@ -170,51 +170,73 @@ axios.get('https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/
     });
 
 
-    
-    const canvas = document.getElementById("can");
-    const ctx = canvas.getContext("2d");
-    const ch = canvas.height = window.innerHeight;
-    const cw = canvas.width = window.innerWidth;
+//canvas 动画背景
+const canvas = document.getElementById("can");
+const ctx = canvas.getContext("2d");
+const ch = canvas.height = window.innerHeight + 4;
+const cw = canvas.width = window.innerWidth + 4;
 
-    class Circle {
-        constructor() {
-            this.x = Math.random() * cw;
-            this.y = Math.random() * ch;
-            this.r = 3;
-            this.speedX = Math.random() * 2 + 2 >= 3 ? -2 : 2;
-            this.speedY = Math.random() * 2 + 2 >= 3 ? -2 : 2;
-        }
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
-            ctx.fillStyle = "blue";
-            ctx.fill();
-            ctx.closePath();
-        }
-        move() {
-            if (this.x >= cw || this.x <= 0) {
-                this.speedX = -this.speedX;
-                this.speedY = this.speedY;
-            }
-            if (this.y >= ch || this.y <= 0) {
-                this.speedX = this.speedX;
-                this.speedY = -this.speedY;
-            }
-            this.x += this.speedX;
-            this.y += this.speedY;
-        }
+class Circle {
+    constructor() {
+        this.x = Math.random() * cw;
+        this.y = Math.random() * ch;
+        this.r = 3;
+        this.speedX = Math.random() * 2 + 2 >= 3 ? -2 : 2;
+        this.speedY = Math.random() * 2 + 2 >= 3 ? -2 : 2;
     }
-
-    const circles = [];
-    for (let i = 0; i < 40; i++) {
-        circles.push(new Circle());
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = "#9B89B3";
+        ctx.fill();
+        ctx.closePath();
     }
+    move() {
+        if (this.x >= cw || this.x <= 0) {
+            this.speedX = -this.speedX;
+            this.speedY = this.speedY;
+        }
+        if (this.y >= ch || this.y <= 0) {
+            this.speedX = this.speedX;
+            this.speedY = -this.speedY;
+        }
+        this.x += this.speedX;
+        this.y += this.speedY;
+    }
+}
 
-    setInterval(() => {
-        ctx.fillStyle = "rgba(0,0,0,0.05)";
-        ctx.fillRect(0, 0, cw, ch);
-        circles.forEach(circle => {
-            circle.draw();
-            circle.move();
-        });
-    }, 1000 / 60);
+const circles = [];
+for (let i = 0; i < 40; i++) {
+    circles.push(new Circle());
+}
+
+setInterval(() => {
+    ctx.fillStyle = "rgba(254, 254, 223, 0.1)";
+    ctx.fillRect(0, 0, cw, ch);
+    circles.forEach(circle => {
+        circle.draw();
+        circle.move();
+    });
+}, 1000 / 60);
+
+// 获取返回顶部按钮
+const backToTopBtn = document.getElementById('back_top');
+
+// 监听页面滚动事件
+window.addEventListener('scroll', () => {
+    // 当页面滚动超过一定距离时显示返回顶部按钮，否则隐藏
+    if (window.scrollY > 200) {
+        backToTopBtn.style.display = 'block';
+    } else {
+        backToTopBtn.style.display = 'none';
+    }
+});
+
+// 监听返回顶部按钮点击事件
+backToTopBtn.addEventListener('click', () => {
+    // 使用平滑滚动回到页面顶部
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
