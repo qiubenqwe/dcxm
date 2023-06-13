@@ -16,3 +16,6 @@ axios.get('https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/
         console.log(cities.length);
         console.log(pageSize);
 ```
+# BUG
+##### 当点击下一页时 有时会出现显示NAN
+##### 当在第二页时 再去搜索不会出现对应的城市 需要在第一页才可以
